@@ -1,0 +1,64 @@
+<criando um procedure para retornar uma ou mais tarefas>
+
+*Criando database e tables(pessoa e telefone):
+create database banco;
+create table pessoa(idpessoa int primary key auto_increment, nome varchar(30) not null, idade varchar(3) not null, sexo enum("m","f") not null, email varchar(30)unique);
+create table telefone(idtelefone int primary key auto_increment,tipo enum("cel", "res", "com")not null,numero char(10) not null,id_pessoa int);
+
+
+*Inserindo informações:
+insert into pessoa values(null,"emilly",20,"f","emilly@globo.com");
+insert into pessoa values(null,"andressa",19,"f","andressa@gmail.com");
+insert into pessoa values(null,"caroline",17,"f","caroline@ipiranga.com");
+insert into pessoa values(null,"lpaulo",20,"m","lpaulo@globo.com");
+insert into pessoa values(null,"sidnei",28,"m","sidnei@gmail.com");
+insert into pessoa values(null,"kaua",22,"m","kaua@gmail.com");
+insert into pessoa values(null,"flavio",25,"m","flavio@globo.com");
+
+insert into telefone values(null, "cel", "99999-9999",1);
+insert into telefone values(null, "cel", "99999-8888",1);
+insert into telefone values(null, "res", "88888-9999",1);
+insert into telefone values(null, "cel", "99999-7777",2);
+insert into telefone values(null, "cel", "99999-6666",2);
+insert into telefone values(null, "res", "88888-2222",2);
+insert into telefone values(null, "cel", "99999-5555",3);
+insert into telefone values(null, "cel", "99999-4444",3);
+insert into telefone values(null, "res", "88888-9999",4);
+insert into telefone values(null, "cel", "99999-6666",5);
+insert into telefone values(null, "cel", "99999-3333",6);
+insert into telefone values(null, "res", "88888-2222",7);
+
+
+*Mudando o delimitador para facilitar os comandos:
+delimiter $
+
+
+*Criando procedure:
+create procedure relatorio()
+begin
+	select p.nome,  p.email, t.numero
+	from pessoa p
+	inner join telefone t
+	on p.idpessoa = t.id_pessoa;
+end$
+
+
+*Para chamar o procedure criado, usamos o call:
+call relatorio () $ 
+
+
+*Outros exemplos de procedure:
+create procedure diferenca()begin select 100 - 20; end$
+create procedure mat()begin select 100 + 20 + 70; end$
+create procedure conta()begin select 10+10 as ' soma'; end$
+create procedure soma (numero1 int, numero2 int)begin select numero1 + numero2 as "soma"; end$
+create procedure media (n1 int, n2 int)begin select n1 as "numero1", n2 as "numero2", n1 + n2 as "soma", (n1+n2)/2 as "media"; end$
+
+
+*E suas execuções:
+call diferenca()$ 
+call mat()$ 
+call conta()$ 
+call soma()$ 
+call media()$ 
+
